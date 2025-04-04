@@ -28,42 +28,41 @@ import com.example.taskflowapp.R //Importar R porque no estamso en el MainActivi
 fun StartScreen(navController: NavController) {
     val image = painterResource(R.drawable.task_flow_logo_s_mbolo_)//imagen de logo
 
-        //En toda la pantalla poner un color de fondo y organizar imagen y boton
-        Box(
+    //En toda la pantalla poner un color de fondo y organizar imagen y boton
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFF2B2D42))
+    ) {
+        //Colocar a logo con su posicion y tamaño
+        Image(
+            painter = image,
+            contentDescription = "Logo App",
             modifier = Modifier
-                .fillMaxSize()
-                .background(Color(0xFF2B2D42))
-        ) {
-            //Colocar a logo con su posicion y tamaño
-            Image(
-                painter = image,
-                contentDescription = "Logo App",
-                modifier = Modifier
-                    .height(300.dp)
-                    .width(300.dp)
-                    .align(Alignment.Center)
+                .height(300.dp)
+                .width(300.dp)
+                .align(Alignment.Center)
+        )
+        //Colocar boton con su posicion, tamaño y color, permitiendo navegacion
+        Button(
+            onClick = { navController.navigate("tasksScreen") },
+            modifier = Modifier
+                .width(250.dp)
+                .height(80.dp)
+                .align(Alignment.BottomCenter)
+                .offset(y= (-80).dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFF43EEB2) // Color de fondo del boton
             )
-            //Colocar boton con su posicion, tamaño y color, permitiendo navegacion
-            Button(
-                onClick = { navController.navigate("tasksScreen") },
-                modifier = Modifier
-                    .width(250.dp)
-                    .height(80.dp)
-                    .align(Alignment.BottomCenter)
-                    .offset(y= (-80).dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF43EEB2) // Color de fondo del boton
-                )
-            ) {
-                //Texto interno del boton con sus caracteristicas
-                Text(
-                    text = "Entrar",
-                    fontSize = 25.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xFF2B2D42),
-                    fontFamily = FontFamily(Font(R.font.montserrat_bold))
-                )
-            }
+        ) {
+            //Texto interno del boton con sus caracteristicas
+            Text(
+                text = "Entrar",
+                fontSize = 25.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF2B2D42),
+                fontFamily = FontFamily(Font(R.font.montserrat_bold))
+            )
         }
-    //}
+    }
 }
