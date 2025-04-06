@@ -15,13 +15,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController // libreria que permite pasar parametro de navegacion
-import com.example.taskflowapp.R //Importar R porque no estamso en el MainActivity
+import com.example.taskflowapp.R //Importar R porque no estamos en el MainActivity
 
 //Fragmento de pantalla de inicio
 @Composable
@@ -37,7 +37,7 @@ fun StartScreen(navController: NavController) {
         //Colocar a logo con su posicion y tamaño
         Image(
             painter = image,
-            contentDescription = "Logo App",
+            contentDescription = stringResource(R.string.logo_app),
             modifier = Modifier
                 .height(300.dp)
                 .width(300.dp)
@@ -50,18 +50,17 @@ fun StartScreen(navController: NavController) {
                 .width(250.dp)
                 .height(80.dp)
                 .align(Alignment.BottomCenter)
-                .offset(y= (-80).dp),
+                .offset(y = (-80).dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xFF43EEB2) // Color de fondo del boton
             )
         ) {
             //Texto interno del boton con sus caracteristicas
             Text(
-                text = "Entrar",
+                text = stringResource(R.string.entrar),
+                fontFamily = FontFamily(Font(R.font.montserrat_bold)),
                 fontSize = 25.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFF2B2D42),
-                fontFamily = FontFamily(Font(R.font.montserrat_bold))
+                color = Color(0xFF2B2D42)
             )
         }
     }
