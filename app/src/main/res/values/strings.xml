@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TaskFlow App</string>
+    <string name="app_name">TaskFlow</string>
     <string name="listado_de_tareas">Listado de Tareas</string>
     <string name="nueva_tarea">Nueva Tarea</string>
     <string name="name_add">Agregar</string>

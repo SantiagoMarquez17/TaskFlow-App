@@ -1,7 +1,6 @@
 package com.example.taskflowapp.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -61,7 +60,7 @@ fun TasksScreenContent(modifier: Modifier = Modifier){
             value = texto,
             onValueChange = { texto = it },
             label = { Text(text = stringResource(R.string.nueva_tarea)) },
-            modifier = Modifier.fillMaxWidth().padding(20.dp)
+            modifier = Modifier.fillMaxWidth().padding(20.dp).background(Color(0xFF2B2D42))
         )
 
         //Crea la lista de tareas que se van agregando, una debajo de otra
@@ -70,7 +69,7 @@ fun TasksScreenContent(modifier: Modifier = Modifier){
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 50.dp, end = 50.dp, top = 10.dp, bottom = 10.dp),
-                color = Color(0xFFD9D9D9)
+                color = Color(0xFF606060)
             ) {
                 Row (verticalAlignment = Alignment.CenterVertically) {
                     Text(
