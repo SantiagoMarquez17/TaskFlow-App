@@ -69,19 +69,21 @@ fun TasksScreenContent(modifier: Modifier = Modifier){
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 50.dp, end = 50.dp, top = 10.dp, bottom = 10.dp),
-                color = Color(0xFF606060)
+                color = Color(0xFFA4A4A6)
             ) {
                 Row (verticalAlignment = Alignment.CenterVertically) {
                     Text(
                         text = "N° ${index + 1}",
-                        modifier = Modifier.padding(5.dp)
+                        modifier = Modifier.padding(5.dp),
+                        color = Color(0xFF2B2D42)
                     )
                     Text(
                         text = it,
                         fontSize = 13.sp,
                         modifier = Modifier
                             .padding(start = 10.dp)
-                            .wrapContentWidth(Alignment.CenterHorizontally)
+                            .wrapContentWidth(Alignment.CenterHorizontally),
+                        color = Color(0xFF2B2D42)
                     )
                 }
 
