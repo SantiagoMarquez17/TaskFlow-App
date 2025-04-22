@@ -1,4 +1,4 @@
-package com.example.taskflowapp.ui
+package com.example.taskflowapp.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -11,19 +11,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.taskflowapp.R
+import com.example.taskflowapp.ui.components.DrawerScaffold
 
 @Composable
 fun WebScreen(navController: NavController) {
     DrawerScaffold(
         navController = navController,
-        screenTitle = stringResource(R.string.web),) { modifier ->
+        screenTitle = stringResource(R.string.web),
+    ) { modifier ->
         WebScreenContent(modifier)
     }
 }
@@ -63,7 +64,9 @@ fun WebScreenContent(modifier: Modifier = Modifier) {
 
         // Botón para abrir Google Calendar
         Button (
-            onClick = {},
+            onClick = {
+
+            },
             modifier = Modifier.align(Alignment.CenterHorizontally),// Centra el botón
             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF43EEB2))
         ){

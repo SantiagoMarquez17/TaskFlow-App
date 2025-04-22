@@ -1,4 +1,4 @@
-package com.example.taskflowapp.ui
+package com.example.taskflowapp.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -12,12 +12,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -30,22 +32,32 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController // libreria que permite pasar parametro de navegacion
 import com.example.taskflowapp.R //Importar R porque no estamos en el MainActivity
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.taskflowapp.ui.components.DrawerScaffold
+import com.example.taskflowapp.viewmodel.TaskViewModel
+
 
 //Función que trae el menú izquierdo a la pantalla y le da su respectivo titulo
 @Composable
 fun TasksScreen(navController: NavController) {
+    val taskViewModel: TaskViewModel = viewModel() //Crear el viewModel
+
     DrawerScaffold(
         navController = navController,
-        screenTitle = stringResource(R.string.listado_de_tareas)) { modifier ->
-        TasksScreenContent(modifier)//Mostrar contenido de la pantalla de tareas
+        screenTitle = stringResource(R.string.listado_de_tareas)
+    ) { modifier ->
+        TasksScreenContent(
+            modifier = modifier,
+            taskViewModel = taskViewModel
+        )//Mostrar contenido de la pantalla de tareas
     }
 }
 
 //Función que crea el contenido de la pantalla tareas
 @Composable
-fun TasksScreenContent(modifier: Modifier = Modifier){
-    var texto by remember { mutableStateOf("") }
-    val tareas = remember { mutableStateListOf<String>() }
+fun TasksScreenContent(modifier: Modifier = Modifier, taskViewModel: TaskViewModel){
+    var texto by remember { mutableStateOf("") } //remember guarda valor mientras esta en pantalla
+    val tareas by taskViewModel.tareas.collectAsState() //Obtiene la lista de tareas en estado normal
 
     // Organiza el campo de escritura, la lista y el boton en una columna centrada
     Column(
@@ -63,30 +75,47 @@ fun TasksScreenContent(modifier: Modifier = Modifier){
             modifier = Modifier.fillMaxWidth().padding(20.dp).background(Color(0xFF2B2D42))
         )
 
-        //Crea la lista de tareas que se van agregando, una debajo de otra
-        tareas.forEachIndexed { index, it ->
+        //Muestra la lista de tareas que se van agregando, una debajo de otra
+        tareas.forEachIndexed { index, tarea ->
             Surface(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 50.dp, end = 50.dp, top = 10.dp, bottom = 10.dp),
                 color = Color(0xFFA4A4A6)
             ) {
-                Row (verticalAlignment = Alignment.CenterVertically) {
+                Row (
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     Text(
-                        text = "N° ${index + 1}",
-                        modifier = Modifier.padding(5.dp),
+                        text = "N° ${tarea.id}",
+                        modifier = Modifier.weight(1f),
                         color = Color(0xFF2B2D42)
                     )
                     Text(
-                        text = it,
+                        text = tarea.descripcion,
                         fontSize = 13.sp,
                         modifier = Modifier
-                            .padding(start = 10.dp)
+                            .weight(3f)
                             .wrapContentWidth(Alignment.CenterHorizontally),
                         color = Color(0xFF2B2D42)
                     )
+                    // Checkbox que indica si la tarea está realizada
+                    Checkbox(
+                        checked = tarea.realizada,
+                        onCheckedChange = {
+                            taskViewModel.cambiarEstado(tarea.id) // Llama al ViewModel para actualizar el estado
+                        },
+                        colors = CheckboxDefaults.colors(
+                            checkedColor = Color(0xFF43EEB2), // Color cuando está marcado
+                            uncheckedColor = Color(0xFF2B2D42), // Color cuando está desmarcado
+                            checkmarkColor = Color(0xFF2B2D42) // Color del ✔ interno
+                        ),
+                        modifier = Modifier.weight(1f)
+                    )
                 }
-
             }
         }
 
@@ -96,7 +125,7 @@ fun TasksScreenContent(modifier: Modifier = Modifier){
         Button(
             onClick = {
                 if (texto.isNotBlank()) {
-                    tareas.add(texto)
+                    taskViewModel.agregarTarea(texto)
                     texto = ""
                 }
             },

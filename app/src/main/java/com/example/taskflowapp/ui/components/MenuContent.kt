@@ -1,4 +1,4 @@
-package com.example.taskflowapp.ui
+package com.example.taskflowapp.ui.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column

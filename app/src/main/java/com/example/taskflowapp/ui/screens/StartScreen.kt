@@ -1,4 +1,4 @@
-package com.example.taskflowapp.ui
+package com.example.taskflowapp.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

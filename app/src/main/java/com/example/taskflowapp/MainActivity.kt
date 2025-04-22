@@ -7,7 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
-import com.example.taskflowapp.ui.TaskFlowNavGraph
+import com.example.taskflowapp.navigation.TaskFlowNavGraph
 import com.example.taskflowapp.ui.theme.TaskFlowAppTheme
 
 class MainActivity : ComponentActivity() {

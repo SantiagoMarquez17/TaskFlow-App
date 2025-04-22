@@ -1,4 +1,4 @@
-package com.example.taskflowapp.ui
+package com.example.taskflowapp.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -18,12 +18,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.taskflowapp.R
+import com.example.taskflowapp.ui.components.DrawerScaffold
 
 @Composable
 fun VideosScreen(navController: NavController) {
     DrawerScaffold(
         navController = navController,
-        screenTitle = stringResource(R.string.videos),) { modifier ->
+        screenTitle = stringResource(R.string.videos),
+    ) { modifier ->
         VideosScreenContent(modifier)
     }
 }

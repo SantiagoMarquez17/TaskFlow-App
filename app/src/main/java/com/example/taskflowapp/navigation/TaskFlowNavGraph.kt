@@ -1,10 +1,16 @@
-package com.example.taskflowapp.ui
+package com.example.taskflowapp.navigation
 
 // Librerias para navegacion entre pantallas incluidas en el build.gradle.kts (:app) y libs.versions
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.taskflowapp.ui.screens.PhotosScreen
+import com.example.taskflowapp.ui.screens.ProfileScreen
+import com.example.taskflowapp.ui.screens.StartScreen
+import com.example.taskflowapp.ui.screens.TasksScreen
+import com.example.taskflowapp.ui.screens.VideosScreen
+import com.example.taskflowapp.ui.screens.WebScreen
 
 // Funcion Compose que define navegacion entre pantallas con el parametro NavController
 @Composable
