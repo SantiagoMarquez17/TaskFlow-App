@@ -15,6 +15,8 @@ class TaskViewModel(application: Application) : AndroidViewModel(application)
      private val _tareas =
          MutableStateFlow<List<Task>>(emptyList()) //lista de tareas mutable y observable
      val tareas: StateFlow<List<Task>> get() = _tareas //lectura para estado de la lista
+     private val _tareasCompletadas = MutableStateFlow(0)
+     val tareasCompletadas: StateFlow<Int> = _tareasCompletadas;
 
      //acceder y asginar la lista guardada por corrutina
      init {
@@ -48,6 +50,10 @@ class TaskViewModel(application: Application) : AndroidViewModel(application)
                  tareas
              }
          }
+     }
+
+     fun actualizarContadores() {
+         _tareasCompletadas.value = _tareas.value.count { it.realizada }
      }
 
  }
