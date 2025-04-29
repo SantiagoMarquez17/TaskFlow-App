@@ -57,6 +57,7 @@ dependencies {
     implementation(libs.coil.compose)// Para llamar imagen que viene de una Uri
     implementation(libs.androidx.media3.exoplayer)//Para dar funciones de reproduccion de video
     implementation(libs.androidx.media3.ui)//Para dar funciones de reproduccion de video
+    implementation(libs.androidx.ui.viewbinding) //Para conectar a internet
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

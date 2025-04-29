@@ -14,6 +14,7 @@ datastore = "1.1.5"
 serializationJson = "1.6.3"
 coil_compose = "2.6.0"
 exoplayer = "1.6.1"
+viewbiding = "1.8.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -37,6 +38,7 @@ kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil_compose"}
 androidx-media3-exoplayer = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "exoplayer"}
 androidx-media3-ui = { group = "androidx.media3", name = "media3-ui", version.ref = "exoplayer"}
+androidx-ui-viewbinding = { group = "androidx.compose.ui", name = "ui-viewbinding", version.ref = "viewbiding"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

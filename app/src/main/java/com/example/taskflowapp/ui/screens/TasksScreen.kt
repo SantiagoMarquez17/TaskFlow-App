@@ -94,7 +94,8 @@ fun TasksScreenContent(modifier: Modifier = Modifier, taskViewModel: TaskViewMod
                 modifier = Modifier.align(Alignment.CenterHorizontally),// Centra el botón
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFF43EEB2)
-                )
+                ),
+                enabled = texto.isNotBlank() // Habilita el botón solo si la URL no está vacía
             ) {
                 //Texto del boton
                 Text(

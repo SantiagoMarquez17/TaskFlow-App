@@ -257,7 +257,7 @@ fun ExpandedVideoView(tarea: Task, onClose: () -> Unit) {
                     modifier = Modifier.padding(bottom = 10.dp)
                 )
 
-                // Muestra el reproductor de video en relación 16:9
+                // Muestra el reproductor de video
                 AndroidView(
                     factory = {
                         PlayerView(it).apply {

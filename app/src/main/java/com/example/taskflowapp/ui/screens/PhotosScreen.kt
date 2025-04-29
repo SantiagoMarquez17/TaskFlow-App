@@ -208,6 +208,7 @@ fun ExpandedImageView(tarea: Task, onClose: () -> Unit) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .verticalScroll(rememberScrollState())
                     .padding(20.dp), // Espaciado entre los elementos
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
