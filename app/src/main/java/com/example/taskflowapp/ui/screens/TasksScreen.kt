@@ -2,6 +2,7 @@ package com.example.taskflowapp.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,6 +11,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
@@ -59,86 +62,95 @@ fun TasksScreenContent(modifier: Modifier = Modifier, taskViewModel: TaskViewMod
     var texto by remember { mutableStateOf("") } //remember guarda valor mientras esta en pantalla
     val tareas by taskViewModel.tareas.collectAsState() //Obtiene la lista de tareas en estado normal
 
-    // Organiza el campo de escritura, la lista y el boton en una columna centrada
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = 80.dp)
-            .background(Color(0xFFF8F9FA)),
-        verticalArrangement = Arrangement.Top
+            .background(Color(0xFFF8F9FA)) // ← Fondo aplicado a toda la pantalla
     ) {
-        //Campo que permite escribir el texto de la tarea a agregar
-        TextField(
-            value = texto,
-            onValueChange = { texto = it },
-            label = { Text(text = stringResource(R.string.nueva_tarea)) },
-            modifier = Modifier.fillMaxWidth().padding(20.dp).background(Color(0xFF2B2D42))
-        )
+        // Organiza el campo de escritura, la lista y el boton en una columna centrada
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 80.dp, bottom = 50.dp)
+                .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.Top
+        ) {
+            //Campo que permite escribir el texto de la tarea a agregar
+            TextField(
+                value = texto,
+                onValueChange = { texto = it },
+                label = { Text(text = stringResource(R.string.nueva_tarea)) },
+                modifier = Modifier.fillMaxWidth().padding(20.dp).background(Color(0xFF2B2D42))
+            )
 
-        //Muestra la lista de tareas que se van agregando, una debajo de otra
-        tareas.forEachIndexed { index, tarea ->
-            Surface(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 50.dp, end = 50.dp, top = 10.dp, bottom = 10.dp),
-                color = Color(0xFFA4A4A6)
+            //Boton que permite agregar el texto digitado a la lista
+            Button(
+                onClick = {
+                    if (texto.isNotBlank()) {
+                        taskViewModel.agregarTarea(texto)
+                        texto = ""
+                    }
+                },
+                modifier = Modifier.align(Alignment.CenterHorizontally),// Centra el botón
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF43EEB2)
+                )
             ) {
-                Row (
+                //Texto del boton
+                Text(
+                    text = stringResource(R.string.name_add),
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFF2B2D42)
+                )
+            }
+
+            Spacer(
+                modifier = Modifier.height(16.dp).padding(16.dp)
+            ) // Espacio entre listado y boton
+
+            //Muestra la lista de tareas que se van agregando, una debajo de otra
+            tareas.forEachIndexed { index, tarea ->
+                Surface(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(8.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                        .padding(start = 50.dp, end = 50.dp, top = 10.dp, bottom = 10.dp),
+                    color = Color(0xFFA4A4A6)
                 ) {
-                    Text(
-                        text = "N° ${tarea.id}",
-                        modifier = Modifier.weight(1f),
-                        color = Color(0xFF2B2D42)
-                    )
-                    Text(
-                        text = tarea.descripcion,
-                        fontSize = 13.sp,
+                    Row(
                         modifier = Modifier
-                            .weight(3f)
-                            .wrapContentWidth(Alignment.CenterHorizontally),
-                        color = Color(0xFF2B2D42)
-                    )
-                    // Checkbox que indica si la tarea está realizada
-                    Checkbox(
-                        checked = tarea.realizada,
-                        onCheckedChange = {
-                            taskViewModel.cambiarEstado(tarea.id) // Llama al ViewModel para actualizar el estado
-                        },
-                        colors = CheckboxDefaults.colors(
-                            checkedColor = Color(0xFF43EEB2), // Color cuando está marcado
-                            uncheckedColor = Color(0xFF2B2D42), // Color cuando está desmarcado
-                            checkmarkColor = Color(0xFF2B2D42) // Color del ✔ interno
-                        ),
-                        modifier = Modifier.weight(1f)
-                    )
+                            .fillMaxWidth()
+                            .padding(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "N° ${tarea.id}",
+                            modifier = Modifier.weight(1f),
+                            color = Color(0xFF2B2D42)
+                        )
+                        Text(
+                            text = tarea.descripcion,
+                            fontSize = 13.sp,
+                            modifier = Modifier
+                                .weight(3f)
+                                .wrapContentWidth(Alignment.CenterHorizontally),
+                            color = Color(0xFF2B2D42)
+                        )
+                        // Checkbox que indica si la tarea está realizada
+                        Checkbox(
+                            checked = tarea.realizada,
+                            onCheckedChange = {
+                                taskViewModel.cambiarEstado(tarea.id) // Llama al ViewModel para actualizar el estado
+                            },
+                            colors = CheckboxDefaults.colors(
+                                checkedColor = Color(0xFF43EEB2), // Color cuando está marcado
+                                uncheckedColor = Color(0xFF2B2D42), // Color cuando está desmarcado
+                                checkmarkColor = Color(0xFF2B2D42) // Color del ✔ interno
+                            ),
+                            modifier = Modifier.weight(1f)
+                        )
+                    }
                 }
             }
-        }
-
-        Spacer(modifier = Modifier.height(16.dp).padding(16.dp)) // Espacio entre listado y boton
-
-        //Boton que permite agregar el texto digitado a la lista
-        Button(
-            onClick = {
-                if (texto.isNotBlank()) {
-                    taskViewModel.agregarTarea(texto)
-                    texto = ""
-                }
-            },
-            modifier = Modifier.align(Alignment.CenterHorizontally),// Centra el botón
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFF43EEB2)
-            )
-        ) {
-            //Texto del boton
-            Text(
-                text = stringResource(R.string.name_add),
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFF2B2D42))
         }
     }
 }

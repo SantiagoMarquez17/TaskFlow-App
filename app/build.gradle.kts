@@ -50,10 +50,13 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation(libs.androidx.navigation.compose)// para navegar entre pantallas
+    implementation(libs.androidx.navigation.compose)// Para navegar entre pantallas
     implementation(libs.androidx.lifecycle.viewmodel.compose) // para usar Viewmodel
-    implementation(libs.androidx.datastore.preferences)// para usar el alamacenamiento del dispositivo
-    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.androidx.datastore.preferences)// Para usar el almacenamiento del dispositivo
+    implementation(libs.kotlinx.serialization.json)// Para covertir a JSON
+    implementation(libs.coil.compose)// Para llamar imagen que viene de una Uri
+    implementation(libs.androidx.media3.exoplayer)//Para dar funciones de reproduccion de video
+    implementation(libs.androidx.media3.ui)//Para dar funciones de reproduccion de video
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
