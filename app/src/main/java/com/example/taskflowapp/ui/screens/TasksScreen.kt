@@ -2,6 +2,7 @@ package com.example.taskflowapp.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,6 +11,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
@@ -72,70 +75,58 @@ fun TasksScreenContent(modifier: Modifier = Modifier, taskViewModel: TaskViewMod
         taskViewModel.actualizarContadores()
     }
 
-    // Organiza el campo de escritura, la lista y el boton en una columna centrada
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = 100.dp)
-            .background(Color(0xFFF8F9FA)),
-        verticalArrangement = Arrangement.Top
+            .background(Color(0xFFF8F9FA)) // ← Fondo aplicado a toda la pantalla
     ) {
-        Row(
+        // Organiza el campo de escritura, la lista y el boton en una columna centrada
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 20.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+                .fillMaxSize()
+                .padding(top = 80.dp, bottom = 50.dp)
+                .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.Top
         ) {
-            Text(text = stringResource(R.string.total_tareas) + ": ${tareas.size}", fontWeight = FontWeight.Bold)
-            Text(text = stringResource(R.string.completadas) + ": $tareasCompletadas", color = Color(0xFF43EEB2))
-        }
-        Spacer(modifier = Modifier.height(16.dp))
-
-        //Campo que permite escribir el texto de la tarea a agregar
-        TextField(
-            value = texto,
-            onValueChange = { texto = it },
-            label = { Text(text = stringResource(R.string.nueva_tarea)) },
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp).background(Color(0xFF2B2D42))
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        //Boton que permite agregar el texto digitado a la lista
-        Button(
-            onClick = {
-                if (texto.isNotBlank()) {
-                    taskViewModel.agregarTarea(texto)
-                    texto = ""
-                }
-            },
-            modifier = Modifier.align(Alignment.CenterHorizontally),// Centra el botón
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFF43EEB2)
+            //Campo que permite escribir el texto de la tarea a agregar
+            TextField(
+                value = texto,
+                onValueChange = { texto = it },
+                label = { Text(text = stringResource(R.string.nueva_tarea)) },
+                modifier = Modifier.fillMaxWidth().padding(20.dp).background(Color(0xFF2B2D42))
             )
-        ) {
-            //Texto del boton
-            Text(
-                text = stringResource(R.string.name_add),
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFF2B2D42))
-        }
 
-        Spacer(modifier = Modifier.height(16.dp))
+            //Boton que permite agregar el texto digitado a la lista
+            Button(
+                onClick = {
+                    if (texto.isNotBlank()) {
+                        taskViewModel.agregarTarea(texto)
+                        texto = ""
+                    }
+                },
+                modifier = Modifier.align(Alignment.CenterHorizontally),// Centra el botón
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF43EEB2)
+                )
+            ) {
+                //Texto del boton
+                Text(
+                    text = stringResource(R.string.name_add),
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFF2B2D42)
+                )
+            }
 
-        if (tareasPendientes.isNotEmpty()) {
-            Text(
-                text = stringResource(R.string.pendientes),
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(start = 20.dp, bottom = 8.dp)
-            )
-            // Muestra la lista de tareas pendientes
-            tareasPendientes.forEachIndexed { index, tarea ->
+            Spacer(
+                modifier = Modifier.height(16.dp).padding(16.dp)
+            ) // Espacio entre listado y boton
+
+            //Muestra la lista de tareas que se van agregando, una debajo de otra
+            tareas.forEachIndexed { index, tarea ->
                 Surface(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 20.dp, vertical = 5.dp),
+                        .padding(start = 50.dp, end = 50.dp, top = 10.dp, bottom = 10.dp),
                     color = Color(0xFFA4A4A6)
                 ) {
                     Row(
@@ -158,6 +149,7 @@ fun TasksScreenContent(modifier: Modifier = Modifier, taskViewModel: TaskViewMod
                                 .wrapContentWidth(Alignment.CenterHorizontally),
                             color = Color(0xFF2B2D42),
                             textDecoration = if (tarea.realizada) TextDecoration.LineThrough else TextDecoration.None
+
                         )
                         // Checkbox que indica si la tarea está realizada
                         Checkbox(

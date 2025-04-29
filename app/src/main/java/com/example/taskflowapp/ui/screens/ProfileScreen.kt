@@ -4,7 +4,9 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -48,7 +50,8 @@ fun ProfileScreenContent(modifier: Modifier = Modifier, taskViewModel: TaskViewM
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFFF8F9FA))
-            .padding(top = 140.dp),
+            .padding(top = 140.dp)
+            .verticalScroll(rememberScrollState()), // Activamos el scroll vertical,,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box(
