@@ -50,7 +50,7 @@ fun WebScreenContent(modifier: Modifier = Modifier) {
     ) {
         // Icono de web
         Image(
-            painter = painterResource(R.drawable.calendar_days_solid),
+            painter = painterResource(R.drawable.ic_web),
             contentDescription = "Icono de navegación web",
             modifier = Modifier
                 .size(80.dp)
