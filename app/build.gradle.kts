@@ -41,7 +41,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -52,6 +51,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)// Para navegar entre pantallas
     implementation(libs.androidx.lifecycle.viewmodel.compose) // para usar Viewmodel
+    implementation("androidx.compose.ui:ui-viewbinding:1.6.7")
     implementation(libs.androidx.datastore.preferences)// Para usar el almacenamiento del dispositivo
     implementation(libs.kotlinx.serialization.json)// Para covertir a JSON
     implementation(libs.coil.compose)// Para llamar imagen que viene de una Uri

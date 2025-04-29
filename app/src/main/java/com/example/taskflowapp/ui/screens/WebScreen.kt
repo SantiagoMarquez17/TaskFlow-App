@@ -1,26 +1,26 @@
 package com.example.taskflowapp.ui.screens
 
-import android.content.Intent
-import android.net.Uri
+import android.annotation.SuppressLint
 import android.util.Log
+import android.view.ViewGroup
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
 import com.example.taskflowapp.R
 import com.example.taskflowapp.ui.components.DrawerScaffold
@@ -35,11 +35,11 @@ fun WebScreen(navController: NavController) {
     }
 }
 
+@SuppressLint("SetJavaScriptEnabled")
 @Composable
 fun WebScreenContent(modifier: Modifier = Modifier) {
-
-    val context = LocalContext.current
     var url by remember { mutableStateOf("") }
+    var webView: WebView? by remember { mutableStateOf(null) }
 
     Column(
         modifier = modifier
@@ -74,25 +74,18 @@ fun WebScreenContent(modifier: Modifier = Modifier) {
         // Botón para cargar la página web
         Button(
             onClick = {
-                if (url.isNotBlank()) {
+                Log.d("WebScreen", "Botón 'Cargar Página Web' presionado")
+                if (url.isNotBlank() && webView != null) {
                     var validUrl = url
                     if (!url.startsWith("http://") && !url.startsWith("https://")) {
-                        validUrl = "http://$url" // Forzar https
+                        validUrl = "http://$url"
                     }
-                    try {
-                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(validUrl)).apply {
-                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                        }
-                        context.startActivity(intent)
-                    } catch (e: Exception) {
-                        Log.e("WebScreen", "Error al parsear o abrir la URL: ${e.message}")
-                        // Toast.makeText(context, "URL inválida", Toast.LENGTH_SHORT).show()
-                    }
+                    webView?.loadUrl(validUrl)
                 }
             },
-            modifier = Modifier.align(Alignment.CenterHorizontally), // Centra el botón
+            modifier = Modifier.align(Alignment.CenterHorizontally),
             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF43EEB2)),
-            enabled = url.isNotBlank() // Habilita el botón solo si la URL no está vacía
+            enabled = url.isNotBlank()
         ) {
             Text(
                 text = "Cargar Página Web",
@@ -100,5 +93,29 @@ fun WebScreenContent(modifier: Modifier = Modifier) {
                 color = Color(0xFF2B2D42)
             )
         }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // WebView integrado
+        AndroidView(
+            factory = { context ->
+                WebView(context).apply {
+                    layoutParams = ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT
+                    )
+                    webViewClient = WebViewClient()
+                    settings.javaScriptEnabled = true
+                    webView = this
+                    loadUrl("https://www.google.com") // Cargar una URL inicial
+                }
+            },
+            update = { view ->
+                webView = view
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f) // Ocupa el espacio restante
+        )
     }
 }

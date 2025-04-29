@@ -11,4 +11,7 @@
     <string name="perfil">Perfil</string>
     <string name="videos">Videos</string>
     <string name="web">Web</string>
+    <string name="pendientes">Pendientes</string>
+    <string name="total_tareas">Total</string>
+    <string name="completadas">Completadas</string>
 </resources>
