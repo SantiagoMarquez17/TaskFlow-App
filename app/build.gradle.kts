@@ -41,7 +41,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -54,6 +53,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose) // para usar Viewmodel
     implementation(libs.androidx.datastore.preferences)// para usar el alamacenamiento del dispositivo
     implementation(libs.kotlinx.serialization.json)
+    implementation("androidx.compose.ui:ui-viewbinding:1.6.7")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
